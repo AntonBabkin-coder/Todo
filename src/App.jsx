@@ -114,7 +114,7 @@ import Footer from './components/Footer/footer'
     const todoCount = todoData.length - doneCount;
 
         
-   console.log(todoData);
+   
     
     return (
       <section className="todoapp">
