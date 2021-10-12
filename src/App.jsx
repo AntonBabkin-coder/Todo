@@ -6,26 +6,31 @@ import Footer from './components/Footer/footer'
 
 
  export default class App extends Component {
-   maxId = 100
+   
   
   state = {
-    todoData: [
-      this.createTodoItem("Completed task"),
-      this.createTodoItem("Editing task"),
-      this.createTodoItem("Active task")
-     
-    ]
+    status: '',
+    
+    
+    todoData: []          
+    
+      
+      
   };
 
-  createTodoItem(label) {
-    return {
-      label,
-      done: false,
-      id: this.maxId++,
-      status: 'all',
-      time: Date.now()
-    }
+  
+
+  todoFilter = (value) => {
+    this.setState ( {
+      status: value
+      
+
+       
+    })
+    
   }
+
+  
 
   addItem = (text) => {
     const newItem = this.createTodoItem(text);
@@ -44,15 +49,7 @@ import Footer from './components/Footer/footer'
     
   }
 
-  todoFilter = (status) => {
-    this.setState ( {
-      status: status
-      
-
-       
-    })
-    
-  }
+  
 
   onToggleDone = (id) => {
     this.setState(({todoData}) => {
@@ -96,15 +93,28 @@ import Footer from './components/Footer/footer'
     });
     
   }
+
+  createTodoItem(label) {
+    return {
+      label,
+      done: false,
+      id: Math.floor(Math.random() * 10000),
+      status: '',
+      time: Date.now()
+    }
+  }
+
+  
  
    
   
   render() {
-    const doneCount = this.state.todoData.filter((el) => el.done).length;
-    const todoCount = this.state.todoData.length - doneCount;
+    const {todoData, status} = this.state;
+    const doneCount = todoData.filter((el) => el.done).length;
+    const todoCount = todoData.length - doneCount;
 
         
-   
+   console.log(todoData);
     
     return (
       <section className="todoapp">
@@ -114,10 +124,10 @@ import Footer from './components/Footer/footer'
         </header>
         <section className="main">
           <TaskList
-           todos={this.state.todoData}
+           todos={todoData}
            onDeleted={this.deletedItem}
            onToggleDone={this.onToggleDone}
-           status={this.state.status}/>
+           status={status}/>
            
           <Footer 
             todoCount={todoCount}

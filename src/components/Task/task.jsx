@@ -1,26 +1,31 @@
-import React, { Component } from 'react'
+import React from 'react'
 import './task.css'
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 import PropTypes from 'prop-types';
 
 
-export default class Task extends Component {
+function Task ({ label, onDeleted, onToggleDone, done, time }) {
     
-    static defaultProps = {
+    Task.defaultProps = {
       onDeleted: () => {},
       onToggleDone: () => {},
+      label: {},
+      done: false,
+      time: ''
+      
     };
 
-    static propTypes = {
-      label: PropTypes.object,
+    Task.propTypes = {
+      label: PropTypes.string,
       done: PropTypes.bool,
-      time: PropTypes.string,
+      time: PropTypes.number,
       onDeleted: PropTypes.func,
-      onToggleDone: PropTypes.func
+      onToggleDone: PropTypes.func,
+      
     }
   
-    render() {
-      const { label, onDeleted, onToggleDone, done, time } = this.props;
+    
+      
       
      
       let changed = '';
@@ -37,11 +42,13 @@ export default class Task extends Component {
                   <span className="description">{label}</span>
                   <span className="created">created {formatDistanceToNow(time, { includeSeconds: true })} ago</span>
                 </label>
-                <button className="icon icon-edit"></button>
-                <button className="icon icon-destroy" onClick = {onDeleted}></button>
+                <button type='button' label='edit' className="icon icon-edit" />
+                <button type='button' label='destroy' className="icon icon-destroy" onClick = {onDeleted} />
               </div>
             </li>
       )
-    }
+    
 } 
+
+export default Task;
 
