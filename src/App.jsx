@@ -9,7 +9,7 @@ import Footer from './components/Footer/footer'
    
   
   state = {
-    status: '',
+    status: 'all',
     
     
     todoData: []          
@@ -35,6 +35,7 @@ import Footer from './components/Footer/footer'
   addItem = (text) => {
     const newItem = this.createTodoItem(text);
     
+   
     
     
     this.setState(({todoData}) => {
@@ -42,6 +43,8 @@ import Footer from './components/Footer/footer'
         ...todoData,
         newItem
       ]
+
+      
       return {
         todoData: newArr
       }
@@ -99,7 +102,7 @@ import Footer from './components/Footer/footer'
       label,
       done: false,
       id: Math.floor(Math.random() * 10000),
-      status: '',
+      status: 'all',
       time: Date.now()
     }
   }
@@ -112,7 +115,7 @@ import Footer from './components/Footer/footer'
     const {todoData, status} = this.state;
     const doneCount = todoData.filter((el) => el.done).length;
     const todoCount = todoData.length - doneCount;
-
+    
         
    
     
@@ -133,7 +136,7 @@ import Footer from './components/Footer/footer'
             todoCount={todoCount}
             todoFilter={this.todoFilter}
             clearCompleted={this.clearCompleted}
-            
+            status={status}
             />
         </section>
       </section>

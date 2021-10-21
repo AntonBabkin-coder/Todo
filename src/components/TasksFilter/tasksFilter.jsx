@@ -6,7 +6,7 @@ function TasksFilter ({todoFilter, status}) {
 
   TasksFilter.defaultProps = {
     todoFilter: () => {},
-    status: ''
+    status: 'all'
   };
 
   TasksFilter.propTypes = {
@@ -19,13 +19,13 @@ function TasksFilter ({todoFilter, status}) {
       return (
           <ul className="filters">
               <li>
-                <button type='button' label="all" onClick ={ () => todoFilter('all')}  className={status === '' ? 'selected' : ''} >All</button>
+                <button type='button' label="all" onClick ={ () => todoFilter('all')}  className={status === 'all' ? 'selected' : ''} >All</button>
               </li>
               <li>
                 <button type="button" label="active"  onClick ={ () => todoFilter('active')} className={status === 'active' ? 'selected' : ''} >Active</button>
               </li>
               <li>
-                <button type="button" className={status === true ? 'selected' : ''} onClick ={ () => todoFilter('completed')}>Completed</button>
+                <button type="button" className={status === "completed" ? 'selected' : ''} onClick ={ () => todoFilter('completed')}>Completed</button>
               </li>
           </ul>
       );
