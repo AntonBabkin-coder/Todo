@@ -12,21 +12,22 @@ export default class TaskList extends Component {
         todos: {},
         onToggleDone: () => {},
         onDeleted: () => {},
-        status: 'all'
-    
+        status: 'all',
+        
+        redactingTask: () => {}
     };
     
     static propTypes = {
         todos:  PropTypes.arrayOf(PropTypes.object),
         onToggleDone: PropTypes.func,
         onDeleted: PropTypes.func,
-        status: PropTypes.string
-    
+        status: PropTypes.string,
+        redactingTask: PropTypes.func
     };
 
     render() {
 
-        const {todos, onDeleted, onToggleDone, status} = this.props;
+        const {todos, onDeleted, onToggleDone, status, redactingTask} = this.props;
     
         const elements = todos.filter(item => {
             if (status === 'all') {
@@ -45,7 +46,9 @@ export default class TaskList extends Component {
                 <Task
                 key={item.id} {...item}
                 onDeleted ={()=> onDeleted(item.id)}
-                onToggleDone ={()=> onToggleDone(item.id)}/>
+                onToggleDone ={()=> onToggleDone(item.id)}
+                
+                redactingTask={redactingTask}/>
             ))
         return (
             <ul className="todo-list">
@@ -53,8 +56,7 @@ export default class TaskList extends Component {
             </ul>
         );
 
-        
-        
+                
     }
 }
 TaskList.defaultProps = {

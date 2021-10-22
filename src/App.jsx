@@ -10,40 +10,26 @@ import Footer from './components/Footer/footer'
   
   state = {
     status: 'all',
-    
-    
     todoData: []          
-    
-      
-      
   };
 
-  
 
   todoFilter = (value) => {
     this.setState ( {
       status: value
       
-
-       
     })
     
   }
 
-  
-
   addItem = (text) => {
     const newItem = this.createTodoItem(text);
-    
-   
-    
-    
+        
     this.setState(({todoData}) => {
       const newArr = [
         ...todoData,
         newItem
       ]
-
       
       return {
         todoData: newArr
@@ -51,8 +37,6 @@ import Footer from './components/Footer/footer'
     })
     
   }
-
-  
 
   onToggleDone = (id) => {
     this.setState(({todoData}) => {
@@ -96,6 +80,7 @@ import Footer from './components/Footer/footer'
     });
     
   }
+  
 
   createTodoItem(label) {
     return {
@@ -103,21 +88,16 @@ import Footer from './components/Footer/footer'
       done: false,
       id: Math.floor(Math.random() * 10000),
       status: 'all',
-      time: Date.now()
+      time: Date.now(),
+      
     }
   }
 
-  
- 
-   
-  
   render() {
     const {todoData, status} = this.state;
     const doneCount = todoData.filter((el) => el.done).length;
     const todoCount = todoData.length - doneCount;
     
-        
-   
     
     return (
       <section className="todoapp">
@@ -130,7 +110,9 @@ import Footer from './components/Footer/footer'
            todos={todoData}
            onDeleted={this.deletedItem}
            onToggleDone={this.onToggleDone}
-           status={status}/>
+           status={status}
+           saveCgange={this.saveCgange}
+           />
            
           <Footer 
             todoCount={todoCount}
