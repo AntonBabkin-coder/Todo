@@ -1,49 +1,56 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import './newTaskForm.css'
+import './newTaskForm.css';
 
 export default class NewTaskForm extends Component {
+  state = {
+    value: '',
+  };
 
-    static defaultProps = {
-        onItemAdded: () => {}
-    }
+  componentDidMount() {
+    this.InputComponent.focus();
+  }
 
-    static propTypes = {
-        onItemAdded: PropTypes.func
-    }
+  onLabelChange = (el) => {
+    this.setState({
+      value: el.target.value,
+    });
+  };
 
-    state = {
-        label: ''
+  onSubmit = (el) => {
+    el.preventDefault();
+    const { onItemAdded } = this.props;
+    const { value } = this.state;
+    if (this.state.value !== '') {
+      onItemAdded(value);
+      this.setState({
+        value: '',
+      });
     }
+  };
 
-    onLabelChange = (el) => {
-        this.setState({
-            label: el.target.value
-        })
-    }
-
-    onSubmit = (el) => {
-        el.preventDefault()
-        const{onItemAdded} = this.props
-        const{label} = this.state
-        onItemAdded(label)
-        this.setState({
-            label: ''
-        })
-    }
-
-    render() {
-        const {label} = this.state;
-        return (
-            <form onSubmit={this.onSubmit}>
-                <input
-                className="new-todo"
-                placeholder="What needs to be done?"
-              
-                onChange={this.onLabelChange} 
-                value={label} />
-            </form>
-        )
-    }
+  render() {
+    const { value } = this.state;
+    return (
+      <form onSubmit={this.onSubmit}>
+        <input
+          ref={(comp) => {
+            this.InputComponent = comp;
+          }}
+          className="new-todo"
+          placeholder="What needs to be done?"
+          onChange={this.onLabelChange}
+          value={value}
+        />
+      </form>
+    );
+  }
 }
 
+NewTaskForm.defaultProps = {
+  onItemAdded: () => {},
+};
+
+NewTaskForm.propTypes = {
+  onItemAdded: PropTypes.func,
+};

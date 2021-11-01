@@ -1,86 +1,60 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import './App.css';
-import TaskList from './components/TaskList/taskList'
-import NewTaskForm from './components/NewTaskForm/newTaskForm'
-import Footer from './components/Footer/footer'
+import TaskList from './components/TaskList/TaskList';
+import NewTaskForm from './components/NewTaskForm/NewTaskForm';
+import Footer from './components/Footer/Footer';
 
-
- export default class App extends Component {
-   
-  
+export default class App extends Component {
   state = {
     status: 'all',
-    todoData: []          
+    todoData: [],
   };
 
-
   todoFilter = (value) => {
-    this.setState ( {
-      status: value
-      
-    })
-    
-  }
+    this.setState({
+      status: value,
+    });
+  };
 
   addItem = (text) => {
-    const newItem = this.createTodoItem(text);
-        
-    this.setState(({todoData}) => {
-      const newArr = [
-        ...todoData,
-        newItem
-      ]
-      
+    this.setState(({ todoData }) => {
+      const newArray = [...todoData, this.createTodoItem(text)];
       return {
-        todoData: newArr
-      }
-    })
-    
-  }
+        todoData: newArray,
+      };
+    });
+  };
 
   onToggleDone = (id) => {
-    this.setState(({todoData}) => {
+    this.setState(({ todoData }) => {
       const idx = todoData.findIndex((el) => el.id === id);
       const oldItem = todoData[idx];
-      const newItem = {...oldItem, done: !oldItem.done}
+      const newItem = { ...oldItem, done: !oldItem.done };
+      const newArray = [...todoData.slice(0, idx), newItem, ...todoData.slice(idx + 1)];
 
-      const newArray = [
-        ...todoData.slice(0, idx),
-        newItem,
-        ...todoData.slice(idx + 1)
-      ]
       return {
-        todoData: newArray
-      }
-    })
-  }
+        todoData: newArray,
+      };
+    });
+  };
 
   deletedItem = (id) => {
-    this.setState(({todoData}) => {
-      const idx = todoData.findIndex((el) => el.id === id);
-      const newArray = [
-        ...todoData.slice(0, idx),
-        ...todoData.slice(idx + 1)
-      ]
+    this.setState(({ todoData }) => {
+      const newArray = todoData.filter((el) => el.id !== id);
       return {
-        todoData: newArray
-      }
-
+        todoData: newArray,
+      };
     });
-  }
+  };
 
   clearCompleted = () => {
-    this.setState(({todoData}) => {
-      const completed = todoData.filter((el) => !el.done);
-             
+    this.setState(({ todoData }) => {
+      const newArray = todoData.filter((el) => !el.done);
       return {
-        todoData: completed
-      }
-      
+        todoData: newArray,
+      };
     });
-    
-  }
-  
+  };
 
   createTodoItem(label) {
     return {
@@ -89,49 +63,33 @@ import Footer from './components/Footer/footer'
       id: Math.floor(Math.random() * 10000),
       status: 'all',
       time: Date.now(),
-      
-    }
+    };
   }
 
   render() {
-    const {todoData, status} = this.state;
-    const doneCount = todoData.filter((el) => el.done).length;
-    const todoCount = todoData.length - doneCount;
-    
-    
+    const { todoData, status } = this.state;
     return (
       <section className="todoapp">
         <header className="header">
           <h1>todos</h1>
-          <NewTaskForm onItemAdded={this.addItem}/>
+          <NewTaskForm onItemAdded={this.addItem} />
         </header>
         <section className="main">
           <TaskList
-           todos={todoData}
-           onDeleted={this.deletedItem}
-           onToggleDone={this.onToggleDone}
-           status={status}
-           saveCgange={this.saveCgange}
-           />
-           
-          <Footer 
-            todoCount={todoCount}
+            todos={todoData}
+            onDeleted={this.deletedItem}
+            onToggleDone={this.onToggleDone}
+            status={status}
+            saveCgange={this.saveCgange}
+          />
+          <Footer
+            todoCount={todoData.length - todoData.filter((el) => el.done).length}
             todoFilter={this.todoFilter}
             clearCompleted={this.clearCompleted}
             status={status}
-            />
+          />
         </section>
       </section>
     );
   }
 }
-
-  
-
-  
-  
-      
-      
-   
-
-// export default App;
