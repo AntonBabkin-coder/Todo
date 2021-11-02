@@ -3,17 +3,15 @@ import PropTypes from 'prop-types';
 import TasksFilter from '../TasksFilter/TasksFilter';
 import './footer.css';
 
-function Footer({ todoCount, todoFilter, status, clearCompleted }) {
-  return (
-    <footer className="footer">
-      <span className="todo-count">{todoCount} items left</span>
-      <TasksFilter todoFilter={todoFilter} status={status} />
-      <button type="button" className="clear-completed" onClick={clearCompleted}>
-        Clear completed
-      </button>
-    </footer>
-  );
-}
+const Footer = ({ todoCount, todoFilter, status, clearCompleted }) => (
+  <footer className="footer">
+    <span className="todo-count">{todoCount} items left</span>
+    <TasksFilter todoFilter={todoFilter} status={status} />
+    <button type="button" className="clear-completed" onClick={clearCompleted}>
+      Clear completed
+    </button>
+  </footer>
+);
 
 export default Footer;
 Footer.defaultProps = {
