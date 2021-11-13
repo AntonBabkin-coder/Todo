@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './task.css';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import PropTypes from 'prop-types';
+import Timer from '../Timer/Timer';
 
 export default class Task extends Component {
   state = {
@@ -28,7 +29,7 @@ export default class Task extends Component {
   };
 
   render() {
-    const { label, onDeleted, onToggleDone, done, time } = this.props;
+    const { label, onDeleted, onToggleDone, done, time, min, sec } = this.props;
     const { isRedaction, inputText } = this.state;
     let changed = '';
     if (done) {
@@ -43,8 +44,9 @@ export default class Task extends Component {
         <div className="view">
           <input className="toggle" type="checkbox" defaultChecked={done} onClick={onToggleDone} />
           <label>
-            <span className="description">{inputText}</span>
-            <span className="created">created {formatDistanceToNow(time, { includeSeconds: true })} ago</span>
+            <span className="title">{inputText}</span>
+            {(min === 0 && sec === 0) || min < 0 || sec < 0 ? null : <Timer min={min} sec={sec} />}
+            <span className="description">created {formatDistanceToNow(time, { includeSeconds: true })} ago</span>
           </label>
           <button type="button" label="edit" className="icon icon-edit" onClick={this.redactingTask} />
           <button type="button" label="destroy" className="icon icon-destroy" onClick={onDeleted} />
@@ -67,6 +69,8 @@ Task.defaultProps = {
   label: {},
   done: false,
   time: '',
+  min: 0,
+  sec: 0,
 };
 
 Task.propTypes = {
@@ -75,4 +79,6 @@ Task.propTypes = {
   time: PropTypes.number,
   onDeleted: PropTypes.func,
   onToggleDone: PropTypes.func,
+  min: PropTypes.number,
+  sec: PropTypes.number,
 };

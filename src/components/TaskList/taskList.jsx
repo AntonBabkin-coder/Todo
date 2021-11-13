@@ -34,6 +34,8 @@ TaskList.defaultProps = {
   onDeleted: () => {},
   status: 'all',
   redactingTask: () => {},
+  min: 0,
+  sec: 0,
 };
 
 TaskList.propTypes = {
@@ -42,6 +44,8 @@ TaskList.propTypes = {
   onDeleted: PropTypes.func,
   status: PropTypes.string,
   redactingTask: PropTypes.func,
+  min: PropTypes.number,
+  sec: PropTypes.number,
 };
 
 export default TaskList;
