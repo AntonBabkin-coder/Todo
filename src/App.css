@@ -115,12 +115,16 @@ button::-moz-focus-inner {
 	}
 }
 
-@media (max-width: 430px) {
+@media (max-width: 768px) {
 	.footer {
 		height: 50px;
 	}
 
 	.filters {
 		bottom: 10px;
+	}
+	.todoapp {
+		margin-right: 10px;
+		margin-left: 10px; 
 	}
 }
