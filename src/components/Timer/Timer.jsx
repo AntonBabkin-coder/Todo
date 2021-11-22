@@ -1,73 +1,50 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-export default class Timer extends Component {
-  state = {
-    min: 0,
-    sec: 0,
-    run: false,
-  };
+const Timer = ({ min, sec }) => {
+  const [minute, setMinute] = useState(min);
+  const [second, setSecond] = useState(sec);
+  const [run, setRun] = useState(false);
 
-  componentDidMount() {
-    const { min, sec } = this.props;
-    this.setState({
-      min,
-      sec,
-    });
-  }
-
-  startTimer = () => {
-    const { run } = this.state;
-    this.setState({
-      run: true,
-    });
-    if (run === false) {
-      this.Inter = setInterval(() => {
-        this.tickFunc();
+  useEffect(() => {
+    let interval = 0;
+    if (run) {
+      interval = setInterval(() => {
+        setSecond(second - 1);
       }, 1000);
     }
+
+    if (second === 0 && minute === 0) {
+      setRun(false);
+      return clearInterval(interval);
+    }
+
+    if (second < 0) {
+      setSecond(59);
+      setMinute(minute - 1);
+    }
+
+    return () => clearInterval(interval);
+  }, [run, second, minute]);
+
+  const startTimer = () => {
+    setRun(true);
   };
 
-  pauseTimer = () => {
-    if (this.Inter) {
-      clearInterval(this.Inter);
-    }
-    this.setState({
-      run: false,
-    });
+  const pauseTimer = () => {
+    setRun(false);
   };
 
-  tickFunc = () => {
-    let { sec, min } = this.state;
-    if (sec === 0 && min === 0) {
-      clearInterval(this.Inter);
-      return;
-    }
-    if (sec === 0) {
-      min -= 1;
-      sec = 60;
-    }
-    sec -= 1;
-    this.setState({
-      sec,
-      min,
-      run: true,
-    });
-  };
-
-  render() {
-    const { min, sec } = this.state;
-    return (
-      <span className="description">
-        <button type="button" label="play" className="icon icon-play" onClick={this.startTimer} />
-        <button type="button" label="pause" className="icon icon-pause" onClick={this.pauseTimer} />
-        <span className="timer-display">
-          {(min < 10 ? '0' : '') + min}:{(sec < 10 ? '0' : '') + sec}
-        </span>
+  return (
+    <span className="description">
+      <button type="button" label="play" className="icon icon-play" onClick={startTimer} />
+      <button type="button" label="pause" className="icon icon-pause" onClick={pauseTimer} />
+      <span className="timer-display">
+        {(minute < 10 ? '0' : '') + minute}:{(second < 10 ? '0' : '') + second}
       </span>
-    );
-  }
-}
+    </span>
+  );
+};
 
 Timer.defaultProps = {
   min: 0,
@@ -78,3 +55,5 @@ Timer.propTypes = {
   min: PropTypes.number,
   sec: PropTypes.number,
 };
+
+export default Timer;

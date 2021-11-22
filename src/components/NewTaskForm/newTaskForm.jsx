@@ -1,83 +1,57 @@
-import React, { Component } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './newTaskForm.css';
 
-export default class NewTaskForm extends Component {
-  state = {
-    value: '',
-    min: '',
-    sec: '',
+const NewTaskForm = ({ onItemAdded }) => {
+  const [value, setValue] = useState('');
+  const [min, setMin] = useState('');
+  const [sec, setSec] = useState('');
+
+  const inputRef = useRef();
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+
+  const onLabelChange = (el) => {
+    setValue(el.target.value);
   };
 
-  componentDidMount() {
-    this.InputComponent.focus();
-  }
-
-  onLabelChange = (el) => {
-    this.setState({
-      value: el.target.value,
-    });
+  const onMinChange = (el) => {
+    setMin(el.target.value);
   };
 
-  onMinChange = (el) => {
-    this.setState({
-      min: el.target.value,
-    });
+  const onSecChange = (el) => {
+    setSec(el.target.value);
   };
 
-  onSecChange = (el) => {
-    this.setState({
-      sec: el.target.value,
-    });
-  };
-
-  onSubmit = (el) => {
+  const onSubmit = (el) => {
     el.preventDefault();
-    const { onItemAdded } = this.props;
-    const { value, min, sec } = this.state;
-    if (this.state.value !== '') {
+
+    if (value !== '') {
       onItemAdded(value, min, sec);
-      this.setState({
-        value: '',
-        min: '',
-        sec: '',
-      });
+      setValue('');
+      setMin('');
+      setSec('');
     }
   };
 
-  render() {
-    const { value, min, sec } = this.state;
-
-    return (
-      <form className="new-todo-form" onSubmit={this.onSubmit}>
-        <input
-          ref={(comp) => {
-            this.InputComponent = comp;
-          }}
-          className="new-todo"
-          placeholder="What needs to be done?"
-          onChange={this.onLabelChange}
-          value={value}
-        />
-        <input
-          type="number"
-          className="new-todo-form__timer"
-          placeholder="Min"
-          value={min}
-          onChange={this.onMinChange}
-        />
-        <input
-          type="number"
-          className="new-todo-form__timer"
-          placeholder="Sec"
-          value={sec}
-          onChange={this.onSecChange}
-        />
-        <input type="submit" hidden />
-      </form>
-    );
-  }
-}
+  return (
+    <form className="new-todo-form" onSubmit={onSubmit}>
+      <input
+        className="new-todo"
+        placeholder="What needs to be done?"
+        onChange={onLabelChange}
+        value={value}
+        ref={inputRef}
+      />
+      <input type="number" className="new-todo-form__timer" placeholder="Min" value={min} onChange={onMinChange} />
+      <input type="number" className="new-todo-form__timer" placeholder="Sec" value={sec} onChange={onSecChange} />
+      <input type="submit" hidden />
+    </form>
+  );
+  // }
+};
 
 NewTaskForm.defaultProps = {
   onItemAdded: () => {},
@@ -86,3 +60,5 @@ NewTaskForm.defaultProps = {
 NewTaskForm.propTypes = {
   onItemAdded: PropTypes.func,
 };
+
+export default NewTaskForm;
