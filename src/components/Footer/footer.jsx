@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TasksFilter from '../TasksFilter/TasksFilter';
-import './footer.css';
+import { TasksFilter } from '../TasksFilter/TasksFilter';
+import './Footer.css';
 
-const Footer = ({ todoCount, todoFilter, status, clearCompleted }) => (
+export const Footer = ({ todoCount, todoFilter, status, clearCompleted }) => (
   <footer className="footer">
     <span className="todo-count">{todoCount} items left</span>
     <TasksFilter todoFilter={todoFilter} status={status} />
@@ -13,7 +13,6 @@ const Footer = ({ todoCount, todoFilter, status, clearCompleted }) => (
   </footer>
 );
 
-export default Footer;
 Footer.defaultProps = {
   todoCount: 0,
   todoFilter: () => {},

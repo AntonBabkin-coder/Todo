@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import './task.css';
+import './Task.css';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import PropTypes from 'prop-types';
-import Timer from '../Timer/Timer';
+import { Timer } from '../Timer/Timer';
 
-const Task = ({ label, onDeleted, onToggleDone, done, time, min, sec }) => {
+export const Task = ({ label, onDeleted, onToggleDone, done, time, min, sec }) => {
   const [isRedaction, setIsRedaction] = useState(false);
   const [inputText, setInputText] = useState(label);
 
@@ -72,5 +72,3 @@ Task.propTypes = {
   min: PropTypes.number,
   sec: PropTypes.number,
 };
-
-export default Task;

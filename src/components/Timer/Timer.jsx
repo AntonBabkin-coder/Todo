@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-const Timer = ({ min, sec }) => {
+export const Timer = ({ min, sec }) => {
   const [minute, setMinute] = useState(min);
   const [second, setSecond] = useState(sec);
   const [run, setRun] = useState(false);
@@ -23,7 +23,6 @@ const Timer = ({ min, sec }) => {
       setSecond(59);
       setMinute(minute - 1);
     }
-
     return () => clearInterval(interval);
   }, [run, second, minute]);
 
@@ -55,5 +54,3 @@ Timer.propTypes = {
   min: PropTypes.number,
   sec: PropTypes.number,
 };
-
-export default Timer;

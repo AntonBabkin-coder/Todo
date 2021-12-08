@@ -1,17 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import './newTaskForm.css';
+import './NewTaskForm.css';
 
-const NewTaskForm = ({ onItemAdded }) => {
+export const NewTaskForm = ({ onItemAdded }) => {
   const [value, setValue] = useState('');
   const [min, setMin] = useState('');
   const [sec, setSec] = useState('');
-
-  const inputRef = useRef();
-
-  useEffect(() => {
-    inputRef.current.focus();
-  }, []);
 
   const onLabelChange = (el) => {
     setValue(el.target.value);
@@ -39,18 +33,17 @@ const NewTaskForm = ({ onItemAdded }) => {
   return (
     <form className="new-todo-form" onSubmit={onSubmit}>
       <input
+        autoFocus
         className="new-todo"
         placeholder="What needs to be done?"
         onChange={onLabelChange}
         value={value}
-        ref={inputRef}
       />
       <input type="number" className="new-todo-form__timer" placeholder="Min" value={min} onChange={onMinChange} />
       <input type="number" className="new-todo-form__timer" placeholder="Sec" value={sec} onChange={onSecChange} />
       <input type="submit" hidden />
     </form>
   );
-  // }
 };
 
 NewTaskForm.defaultProps = {
@@ -60,5 +53,3 @@ NewTaskForm.defaultProps = {
 NewTaskForm.propTypes = {
   onItemAdded: PropTypes.func,
 };
-
-export default NewTaskForm;

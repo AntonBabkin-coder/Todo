@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import './App.css';
-import TaskList from './components/TaskList/TaskList';
-import NewTaskForm from './components/NewTaskForm/NewTaskForm';
-import Footer from './components/Footer/Footer';
+import { TaskList } from './components/TaskList/TaskList';
+import { NewTaskForm } from './components/NewTaskForm/NewTaskForm';
+import { Footer } from './components/Footer/Footer';
 
-const App = () => {
+export const App = () => {
   const [status, setStatus] = useState('all');
   const [todoData, setTodoData] = useState([]);
 
@@ -19,8 +19,7 @@ const App = () => {
   });
 
   const addItem = (text, min, sec) => {
-    const newArray = createTodoItem(text, min, sec);
-    setTodoData([...todoData, newArray]);
+    setTodoData([...todoData, createTodoItem(text, min, sec)]);
   };
 
   const onToggleDone = (id) => {
@@ -42,6 +41,19 @@ const App = () => {
     setStatus(value);
   };
 
+  const todos = todoData.filter((item) => {
+    if (status === 'all') {
+      return item;
+    }
+    if (status === 'active') {
+      return !item.done;
+    }
+    if (status === 'completed') {
+      return item.done;
+    }
+    return todoData;
+  });
+
   return (
     <section className="todoapp">
       <header className="header">
@@ -49,7 +61,7 @@ const App = () => {
         <NewTaskForm onItemAdded={addItem} />
       </header>
       <section className="main">
-        <TaskList todos={todoData} onDeleted={deletedItem} onToggleDone={onToggleDone} status={status} />
+        <TaskList todos={todos} onDeleted={deletedItem} onToggleDone={onToggleDone} status={status} />
         <Footer
           todoCount={todoData.length - todoData.filter((el) => el.done).length}
           todoFilter={todoFilter}
@@ -60,5 +72,3 @@ const App = () => {
     </section>
   );
 };
-
-export default App;
