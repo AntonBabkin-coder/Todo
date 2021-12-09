@@ -12,11 +12,11 @@ export const NewTaskForm = ({ onItemAdded }) => {
   };
 
   const onMinChange = (el) => {
-    setMin(el.target.value);
+    setMin(el.target.value.slice(0, 2));
   };
 
   const onSecChange = (el) => {
-    setSec(el.target.value);
+    setSec(el.target.value.slice(0, 2));
   };
 
   const onSubmit = (el) => {

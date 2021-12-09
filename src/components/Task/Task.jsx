@@ -42,13 +42,7 @@ export const Task = ({ label, onDeleted, onToggleDone, done, time, min, sec }) =
         <button type="button" label="edit" className="icon icon-edit" onClick={redactingTask} />
         <button type="button" label="destroy" className="icon icon-destroy" onClick={onDeleted} />
       </div>
-      <input
-        ref={(input) => input && input.focus()}
-        type="text"
-        className="edit"
-        defaultValue={label}
-        onKeyDown={saveChange}
-      />
+      <input type="text" className="edit" defaultValue={label} onKeyDown={saveChange} />
     </li>
   );
 };
