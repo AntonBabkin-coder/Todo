@@ -33,13 +33,12 @@
 .todo-list li .toggle {
 	text-align: center;
 	width: 40px;
-	/* auto, since non-WebKit browsers doesn't support input styling */
 	height: auto;
 	position: absolute;
 	top: 0;
 	bottom: 0;
 	margin: auto 0;
-	border: none; /* Mobile Safari */
+	border: none; 
 	-webkit-appearance: none;
 	appearance: none;
 	cursor: pointer;
@@ -88,9 +87,7 @@
 }
 
 .todo-list li .icon {
-	/* position: absolute; 
-	top: 0;
-	bottom: -3px; */
+	bottom: -3px; 
 	width: 30px;
 	height: 40px;
 	font-size: 34px;
@@ -181,8 +178,6 @@
 	color: #cdcdcd;
 	text-decoration: line-through;
 }
-
-
 
 
 .todo-list li label .description {
