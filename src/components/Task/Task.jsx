@@ -15,10 +15,10 @@ export const Task = ({ label, onDeleted, onToggleDone, done, time, min, sec }) =
   const saveChange = (text) => {
     if (text.keyCode === 13) {
       text.preventDefault();
-      if (text.target.value !== '') {
-        setInputText(text.target.value);
-        setIsRedaction(false);
-      }
+      // if (text.target.value !== '') {
+      setInputText(text.target.value);
+      setIsRedaction(false);
+      // }
     }
   };
 
@@ -42,7 +42,13 @@ export const Task = ({ label, onDeleted, onToggleDone, done, time, min, sec }) =
         <button type="button" label="edit" className="icon icon-edit" onClick={redactingTask} />
         <button type="button" label="destroy" className="icon icon-destroy" onClick={onDeleted} />
       </div>
-      <input type="text" className="edit" defaultValue={label} onKeyDown={saveChange} />
+      <input
+        type="text"
+        className="edit"
+        defaultValue={label}
+        onKeyDown={saveChange}
+        ref={(input) => input && input.focus()}
+      />
     </li>
   );
 };
