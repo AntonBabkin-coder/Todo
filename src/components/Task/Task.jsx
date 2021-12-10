@@ -15,10 +15,10 @@ export const Task = ({ label, onDeleted, onToggleDone, done, time, min, sec }) =
   const saveChange = (text) => {
     if (text.keyCode === 13) {
       text.preventDefault();
-      // if (text.target.value !== '') {
-      setInputText(text.target.value);
-      setIsRedaction(false);
-      // }
+      if (text.target.value !== '') {
+        setInputText(text.target.value);
+        setIsRedaction(false);
+      }
     }
   };
 
