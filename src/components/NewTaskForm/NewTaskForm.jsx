@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import './newTaskForm.css';
+import './NewTaskForm.css';
 
 export default class NewTaskForm extends Component {
   state = {

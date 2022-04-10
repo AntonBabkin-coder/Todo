@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './task.css';
+import './Task.css';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import PropTypes from 'prop-types';
 import Timer from '../Timer/Timer';

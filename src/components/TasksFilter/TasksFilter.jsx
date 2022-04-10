@@ -1,5 +1,5 @@
 import React from 'react';
-import './taskFilter.css';
+import './TaskFilter.css';
 import PropTypes from 'prop-types';
 
 function TasksFilter({ todoFilter, status }) {
